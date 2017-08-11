@@ -1,3 +1,4 @@
+// Provides a sample demo program using the filewatch package.
 package main
 
 import (
