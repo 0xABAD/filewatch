@@ -72,7 +72,7 @@ func Watch(done <-chan struct{}, path string, recurse bool, interval *time.Durat
 		}
 		infos[path] = info
 
-		if info.IsDir() && !recurse {
+		if info.IsDir() && !recurse && path != root {
 			return filepath.SkipDir
 		}
 		return nil
