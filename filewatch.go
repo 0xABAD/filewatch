@@ -117,7 +117,7 @@ func Watch(done <-chan struct{}, path string, recurse bool, interval *time.Durat
 						infos[path] = next
 
 						// check if new files have been added
-						if next.IsDir() {
+						if next.IsDir() && recurse {
 							up.Error = filepath.Walk(path, func(p string, i os.FileInfo, e error) error {
 								if e != nil {
 									return e
