@@ -70,11 +70,10 @@ func Watch(done <-chan struct{}, path string, recurse bool, interval *time.Durat
 		if e != nil {
 			return e
 		}
-		infos[path] = info
-
 		if info.IsDir() && !recurse && path != root {
 			return filepath.SkipDir
 		}
+		infos[path] = info
 		return nil
 	})
 	if werr != nil {
@@ -117,20 +116,20 @@ func Watch(done <-chan struct{}, path string, recurse bool, interval *time.Durat
 						infos[path] = next
 
 						// check if new files have been added
-						if next.IsDir() && recurse {
+						if next.IsDir() {
 							up.Error = filepath.Walk(path, func(p string, i os.FileInfo, e error) error {
 								if e != nil {
 									return e
 								} else if infos[p] == nil {
+									if i.IsDir() && !recurse {
+										return filepath.SkipDir
+									}
 									infos[p] = i
 									discovered = append(discovered, Update{
 										AbsPath:  p,
 										Prev:     i,
 										WasAdded: true,
 									})
-									if i.IsDir() && !recurse {
-										return filepath.SkipDir
-									}
 								}
 								return nil
 							})
