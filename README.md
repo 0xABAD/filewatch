@@ -22,7 +22,7 @@ allows specifying the nanosecond in the `time.Time` type, this
 nanosecond isn't recorded when writing a change to a file (most likely
 depends on the underlying OS).  Thus, if a change or a series occurs
 to a file or directory within a single second and the size hasn't
-changed from the last recorded file change then non change will be
+changed from the last recorded file change then no change will be
 detected.  In practice, this issue may be pretty rare depending on how
 one uses the library but important to note.
 
